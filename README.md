@@ -1,0 +1,1 @@
+Single page web application created in Go, using gohtml template modules in a one step ahead lazy loading pattern.
