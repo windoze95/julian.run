@@ -22,7 +22,7 @@ build:
 	$(MKDIR_P) $(PATH_TMP) $(PATH_DIST) $(PATH_ASSETS)
 	cp $(PATH_TEMPLATES)/**/*.gohtml $(PATH_TMP)
 	cp $(PATH_TEMPLATES)/**/*.js $(PATH_TMP)
-	go-bindata -pkg $(PATH_ASSETS) -prefix=$(PATH_TMP) -o $(PATH_ASSETS)/$(ASSETS_FILE) $(PATH_TMP)/...
+	./go-bindata -pkg $(PATH_ASSETS) -prefix=$(PATH_TMP) -o $(PATH_ASSETS)/$(ASSETS_FILE) $(PATH_TMP)/...
 	CGO_ENABLED=0 GOOS=$(OS) GOARCH=$(ARCH) $(GOBUILD) -o $(PATH_DIST)/$(BINARY_NAME) -v
 	rm -rf $(PATH_TMP)
 	rm -rf $(PATH_ASSETS)
@@ -30,5 +30,4 @@ run:
 	$(GOBUILD) -o $(PATH_DIST)/$(BINARY_NAME) -v
 	$(PATH_DIST)/$(BINARY_NAME)
 deps:
-	$(GOGET) github.com/jteeuwen/go-bindata
-	$(GOGET) github.com/julienschmidt/httprouter
+	$(GOBUILD) ./vendor/github.com/jteeuwen/go-bindata/go-bindata
