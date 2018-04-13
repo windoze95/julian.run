@@ -87,7 +87,7 @@ func _404Gohtml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "404.gohtml", size: 12, mode: os.FileMode(420), modTime: time.Unix(1523660682, 0)}
+	info := bindataFileInfo{name: "404.gohtml", size: 12, mode: os.FileMode(420), modTime: time.Unix(1523661765, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -107,7 +107,7 @@ func bootGohtml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "boot.gohtml", size: 158, mode: os.FileMode(420), modTime: time.Unix(1523660682, 0)}
+	info := bindataFileInfo{name: "boot.gohtml", size: 158, mode: os.FileMode(420), modTime: time.Unix(1523661765, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -127,7 +127,7 @@ func bootJs() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "boot.js", size: 22058, mode: os.FileMode(420), modTime: time.Unix(1523660682, 0)}
+	info := bindataFileInfo{name: "boot.js", size: 22058, mode: os.FileMode(420), modTime: time.Unix(1523661765, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -147,7 +147,7 @@ func indexGohtml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "index.gohtml", size: 220, mode: os.FileMode(420), modTime: time.Unix(1523660682, 0)}
+	info := bindataFileInfo{name: "index.gohtml", size: 220, mode: os.FileMode(420), modTime: time.Unix(1523661765, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -167,7 +167,7 @@ func indexJs() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "index.js", size: 1997, mode: os.FileMode(420), modTime: time.Unix(1523660682, 0)}
+	info := bindataFileInfo{name: "index.js", size: 1997, mode: os.FileMode(420), modTime: time.Unix(1523661765, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
