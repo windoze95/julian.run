@@ -2,9 +2,9 @@ var nxtBtn = document.querySelector('#nxt-btn');
 var mainView = document.querySelector('#main-view');
 var modules = {};
 
-getNextView('/boot/1', '/assets/js/boot1.js', 'boot1', mainView);
-getNextView('/boot/2', '', 'boot2', mainView);
-setView('boot1');
+getNextView('/template/boot', '/asset/js/boot.js', 'boot', mainView);
+// getNextView('/home', '/assets/js/home.js', 'home', mainView);
+setView('boot');
 
 function getNextView(viewModulePath, jsModulePath, moduleName, element) {
     if (typeof modules[moduleName] == 'undefined') {
@@ -40,7 +40,7 @@ function readNextJS(resText, moduleName) {
 
 function setView(moduleName) {
     var i = 1;
-    var tryTimeout = 480 // 480 250ms tries for a two minute timeout
+    var tryTimeout = 2400; // 2400 50ms tries for a two minute timeout
     var tryGo = setInterval(function() {
         if (typeof modules[moduleName].templateStr != 'undefined' && typeof modules[moduleName].js != 'undefined') {
             go(moduleName);
@@ -50,12 +50,13 @@ function setView(moduleName) {
             clearInterval(tryGo);
         }
         i++;
-    }, 250);
+    }, 50);
 
     function go(moduleName) {
         modules[moduleName].element.innerHTML = modules[moduleName].templateStr;
         var hasScript = !!modules[moduleName].element.getElementsByTagName('script')[0];
-        eval(modules[moduleName].js);
-        if (hasScript) {}
+        if (hasScript) {
+            eval(modules[moduleName].js);
+        }
     }
 }

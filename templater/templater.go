@@ -15,7 +15,10 @@ func (t *Templates) Register(tMs ...TemplateModule) {
 }
 
 func (t *Templates) GetTemplateModule(name string) (templateModule TemplateModule) {
-	templateModule, _ = t.templateModules[name]
+	templateModule, exists := t.templateModules[name]
+	if !exists {
+		templateModule = t.templateModules["404"]
+	}
 	return
 
 }

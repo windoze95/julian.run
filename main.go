@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
+	"github.com/orange-lightsaber/julian.run/assets"
 	"github.com/orange-lightsaber/julian.run/templates"
 )
 
@@ -17,28 +18,25 @@ func main() {
 		err := index.Template.Execute(w, index.Data)
 		HandleError(w, err)
 	})
-	mux.GET("/assets/js/:module", func(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
+	mux.GET("/asset/js/:module", func(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 		module := ps.ByName("module")
-		_, err := fmt.Fprint(w, string(templates.GetAsset(module)))
-		HandleError(w, err)
-	})
-	mux.GET("/boot/:step", func(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
-		var err error
-		var s string
-		step := ps.ByName("step")
-		switch step {
-		case "1":
-			s = "boot" + step
-		case "2":
-			s = "boot" + step
-		case "3":
-			s = "boot" + step
-		default:
-			HandleError(w, fmt.Errorf("%s is not a valid boot step.", step))
+		a, err := assets.GetAsset(module)
+		if err != nil {
+			http.Error(w, string(a), http.StatusNotFound)
 			return
 		}
-		boot := templateModules.GetTemplateModule(s)
-		err = boot.Template.Execute(w, nil)
+		_, err = fmt.Fprint(w, string(a))
+		HandleError(w, err)
+	})
+	mux.GET("/template/:template", func(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
+		templateName := ps.ByName("template")
+		tpl := templateModules.GetTemplateModule(templateName)
+		err := tpl.Template.Execute(w, nil)
+		HandleError(w, err)
+	})
+	mux.NotFound = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fof := templateModules.GetTemplateModule("404")
+		err := fof.Template.Execute(w, fof.Data)
 		HandleError(w, err)
 	})
 	log.Fatal(http.ListenAndServe(":8080", mux))
