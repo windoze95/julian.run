@@ -14,12 +14,14 @@ func (t *Templates) Register(tMs ...TemplateModule) {
 	}
 }
 
-func (t *Templates) GetTemplateModule(name string) TemplateModule {
-	return t.templateModules[name]
+func (t *Templates) GetTemplateModule(name string) (templateModule TemplateModule) {
+	templateModule, _ = t.templateModules[name]
+	return
+
 }
 
-func New() (T Templates) {
-	T.templateModules = make(map[string]TemplateModule)
+func New() (newTemplates Templates) {
+	newTemplates = Templates{templateModules: make(map[string]TemplateModule)}
 	return
 }
 
@@ -37,6 +39,7 @@ func (t *TemplateModule) SetData(d interface{}) {
 	t.Data = d
 }
 
-func NewTemplateModule(name string) TemplateModule {
-	return TemplateModule{Name: name}
+func NewTemplateModule(name string) (templateModule TemplateModule) {
+	templateModule = TemplateModule{Name: name}
+	return
 }
