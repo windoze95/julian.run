@@ -26,7 +26,7 @@ function bootmsgInterval() {
 }
 
 function loginInterval() {
-    var loginLine = 'anon-user' + Math.floor(1000 + Math.random() * 9000) + '@hoth/~' + '$ ';
+    var loginLine = 'anon-user' + Math.floor(1000 + Math.random() * 9000) + '@hoth ~|&#8658; ';
     bootView.innerHTML = loginLine;
     var startx = ['s', 't', 'a', 'r', 't', 'x'];
     var i = 0;
