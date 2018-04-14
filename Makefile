@@ -31,3 +31,5 @@ run:
 deps:
 	GOPATH=$(PWD)/vendor/env \
 	&& $(GOBUILD) github.com/jteeuwen/go-bindata/go-bindata
+docker-build:
+	docker build --rm --no-cache -t orangelightsaber/julian.run -f Dockerfile .

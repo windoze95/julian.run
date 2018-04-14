@@ -1,3 +1,4 @@
 tmp
 dist
 /go-bindata
+/deploy.sh
