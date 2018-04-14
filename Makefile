@@ -26,7 +26,8 @@ build:
 	CGO_ENABLED=0 GOOS=$(OS) GOARCH=$(ARCH) $(GOBUILD) -o $(PATH_DIST)/$(BINARY_NAME) -v
 	rm -rf $(PATH_TMP)
 run:
-	$(GOBUILD) -o $(PATH_DIST)/$(BINARY_NAME) -v
+	make build
 	$(PATH_DIST)/$(BINARY_NAME)
 deps:
-	$(GOBUILD) ./vendor/github.com/jteeuwen/go-bindata/go-bindata
+	GOPATH=$(PWD)/vendor/env \
+	&& $(GOBUILD) github.com/jteeuwen/go-bindata/go-bindata
