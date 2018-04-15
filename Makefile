@@ -20,8 +20,7 @@ clean:
 build:
 	make clean
 	$(MKDIR_P) $(PATH_TMP) $(PATH_DIST)
-	cp $(PATH_TEMPLATES)/**/*.gohtml $(PATH_TMP)
-	cp $(PATH_TEMPLATES)/**/*.js $(PATH_TMP)
+	./ready-assets -template-modules-path $(PATH_TEMPLATES) -tmp-path $(PATH_TMP)
 	./go-bindata -pkg $(PATH_ASSETS) -prefix=$(PATH_TMP) -o $(PATH_ASSETS)/$(ASSETS_FILE) $(PATH_TMP)/...
 	CGO_ENABLED=0 GOOS=$(OS) GOARCH=$(ARCH) $(GOBUILD) -o $(PATH_DIST)/$(BINARY_NAME) -v
 	rm -rf $(PATH_TMP)
@@ -30,6 +29,7 @@ run:
 	$(PATH_DIST)/$(BINARY_NAME)
 deps:
 	GOPATH=$(PWD)/vendor/env \
+	&& $(GOBUILD) github.com/orange-lightsaber/ready-assets \
 	&& $(GOBUILD) github.com/jteeuwen/go-bindata/go-bindata
 docker-build:
 	docker build --rm --no-cache -t orangelightsaber/julian.run -f Dockerfile .
