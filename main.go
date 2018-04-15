@@ -18,16 +18,8 @@ func main() {
 		err := index.Template.Execute(w, index.Data)
 		HandleError(w, err)
 	})
-	mux.GET("/asset/js/:module", func(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
-		module := ps.ByName("module")
-		a, err := assets.GetAsset(module)
-		if err != nil {
-			http.Error(w, string(a), http.StatusNotFound)
-			return
-		}
-		_, err = fmt.Fprint(w, string(a))
-		HandleError(w, err)
-	})
+	mux.GET("/asset/js/:module", assetHandler)
+	mux.GET("/asset/gcss/:module", assetHandler)
 	mux.GET("/template/:template", func(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 		templateName := ps.ByName("template")
 		tpl := templateModules.GetTemplateModule(templateName)
@@ -40,6 +32,17 @@ func main() {
 		HandleError(w, err)
 	})
 	log.Fatal(http.ListenAndServe(":8080", mux))
+}
+
+func assetHandler(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
+	module := ps.ByName("module")
+	a, err := assets.GetAsset(module)
+	if err != nil {
+		http.Error(w, string(a), http.StatusNotFound)
+		return
+	}
+	_, err = fmt.Fprint(w, string(a))
+	HandleError(w, err)
 }
 
 func HandleError(w http.ResponseWriter, err error) {
