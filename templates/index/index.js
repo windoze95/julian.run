@@ -1,12 +1,11 @@
-var nxtBtn = document.querySelector('#nxt-btn');
-var mainView = document.querySelector('#main-view');
 var modules = {};
+var mainView = document.querySelector('#main-view');
 
-getNextView('/template/boot', '/asset/js/boot.js', 'boot', mainView);
-// getNextView('/home', '/assets/js/home.js', 'home', mainView);
+getNextView('/template/boot', '/asset/boot.js', '/asset/boot.gcss', 'boot', mainView);
+// getNextView('/home', '/assets/home.js', '/assets/home.gcss', 'home', mainView);
 setView('boot');
 
-function getNextView(viewModulePath, jsModulePath, moduleName, element) {
+function getNextView(viewModulePath, jsModulePath, gcssModulePath, moduleName, element) {
     if (typeof modules[moduleName] == 'undefined') {
         modules[moduleName] = {};
     }
@@ -14,6 +13,11 @@ function getNextView(viewModulePath, jsModulePath, moduleName, element) {
     getAsset(viewModulePath, moduleName, readNextView);
     if (jsModulePath != '') {
         getAsset(jsModulePath, moduleName, readNextJS);
+    } else {
+        modules[moduleName].js = '';
+    }
+    if (gcssModulePath != '') {
+        getAsset(gcssModulePath, moduleName, readNextGCSS);
     } else {
         modules[moduleName].js = '';
     }
@@ -38,6 +42,10 @@ function readNextJS(resText, moduleName) {
     modules[moduleName].js = resText;
 }
 
+function readNextGCSS(resText, moduleName) {
+    modules[moduleName].gcss = resText;
+}
+
 function setView(moduleName) {
     var i = 1;
     var tryTimeout = 2400; // 2400 50ms tries for a two minute timeout
@@ -55,8 +63,14 @@ function setView(moduleName) {
     function go(moduleName) {
         modules[moduleName].element.innerHTML = modules[moduleName].templateStr;
         var hasScript = !!modules[moduleName].element.getElementsByTagName('script')[0];
+        var hasStyle = !!modules[moduleName].element.getElementsByTagName('style')[0];
         if (hasScript) {
             eval(modules[moduleName].js);
+        }
+        if (hasStyle) {
+            var style = modules[moduleName].element.getElementsByTagName('style')[0];
+            style.type = 'text/css';
+            style.innerHTML = modules[moduleName].gcss;
         }
     }
 }
