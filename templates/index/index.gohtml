@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>julian.run</title>
+    <!-- TODO: vendor custom bootstrap -->
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 </head>
 <body>
-<div id="main-view"></div>
+<style type="text/css">
+  html, body{
+    height: 100%;
+  }
+  #main-view {
+    height: 100%;
+    color: white;
+    background-color: black;
+    padding: 16px;
+  }
+</style>
+<div id="main-view" class="container-fluid"></div>
 <script type="text/javascript" src="/asset/index.js"></script>
 </body>
 </html>
